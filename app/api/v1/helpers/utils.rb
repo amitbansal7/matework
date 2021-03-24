@@ -23,17 +23,17 @@ module V1
         Rack::Utils::SYMBOL_TO_STATUS_CODE[symbol.to_sym]
       end
 
-      def serialized_data(object, serializer_class=nil)
+      def serialized_data(object, serializer_class = nil)
         return unless object.present?
-        
+
         serializer_class ||= if object.respond_to?(:to_a)
-          "#{object[0].class}Serializer".constantize
-        else
-          "#{object.class}Serializer".constantize
-        end
-        
+                               "#{object[0].class}Serializer".constantize
+                             else
+                               "#{object.class}Serializer".constantize
+                             end
+
         if object.respond_to?(:to_a)
-          object.map { |o|  serializer_class.new(o).serializable_hash.dig(:data, :attributes)}
+          object.map { |o| serializer_class.new(o).serializable_hash.dig(:data, :attributes) }
         else
           serializer_class.new(object).serializable_hash.dig(:data, :attributes)
         end

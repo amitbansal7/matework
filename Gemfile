@@ -40,6 +40,7 @@ gem 'rack'
 gem 'roar'
 gem 'fast_jsonapi'
 gem 'paranoia'
+gem 'faker'
 
 
 

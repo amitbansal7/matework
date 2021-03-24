@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class JwtService
-  SECRET_KEY = 'aaasdfs'
+  SECRET_KEY = 'jssdfs'
   EXPIRY_TIME = 30.days
   REFRESH_TIME = 1.minute
 

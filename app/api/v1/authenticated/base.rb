@@ -12,6 +12,7 @@ module V1
 
       mount V1::Authenticated::Users
       mount V1::Authenticated::Invites
+      mount V1::Authenticated::Chats
     end
   end
 end
