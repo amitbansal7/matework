@@ -3,6 +3,8 @@
 class Invite < ApplicationRecord
   acts_as_paranoid
 
+  has_many :messages, dependent: :destroy
+
   belongs_to :to_user, foreign_key: :to_user_id, class_name: 'User', validate: true
   belongs_to :from_user, foreign_key: :from_user_id, class_name: 'User', validate: true
 
