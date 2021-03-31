@@ -24,7 +24,8 @@ module V1
       end
 
       def serialized_data(object, serializer_class = nil)
-        return unless object.present?
+        return nil if object.nil?
+        return [] if object.empty?
 
         serializer_class ||= if object.respond_to?(:to_a)
                                "#{object[0].class}Serializer".constantize
