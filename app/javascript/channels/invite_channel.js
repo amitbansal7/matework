@@ -1,6 +1,6 @@
 import consumer from "./consumer"
 
-consumer.subscriptions.create({channel: "InviteChannel", id: 4}, {
+consumer.subscriptions.create({channel: "UserDataChannel", id: 4}, {
   connected() {
     console.log("connected to InviteChannel");
   },

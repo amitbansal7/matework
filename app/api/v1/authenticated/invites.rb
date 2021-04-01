@@ -24,11 +24,10 @@ module V1
         params do
         end
         get '' do
+          invites = current_user.received_invites.where(accepted: false).includes(:from_user)
           render_success(
             data: {
-              invites: serialized_data(
-                current_user.received_invites.where(accepted: false).includes(:from_user)
-              )
+              invites: serialized_data(invites)
             }
           )
         end

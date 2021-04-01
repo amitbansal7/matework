@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class Message < ApplicationRecord
-  belongs_to :invite
+  belongs_to :invite, touch: true
   belongs_to :sender, class_name: 'User'
 
-  validates_presence_of :text
+  validates_presence_of :text, :sender_id
 
   validate :sender_is_from_invite
   validate :invite_must_be_accepted
@@ -24,12 +24,16 @@ class Message < ApplicationRecord
   end
 
   def broadcast_to_channel
-    InviteChannel.broadcast_to(
-      invite,
-      id: id,
-      message: text,
-      sender_id: sender_id,
-      created_at: created_at.to_i
-    )
+    [invite.from_user, invite.to_user].each do |user|
+      UserDataChannel.broadcast_to(
+        user,
+        type: 'Message',
+        invite_id: invite.id,
+        id: id,
+        message: text,
+        sender_id: sender_id,
+        created_at: created_at.to_i
+      )
+    end
   end
 end
