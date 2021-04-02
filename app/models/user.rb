@@ -15,6 +15,11 @@ class User < ApplicationRecord
   has_many :invites, lambda { |user|
                        unscope(:where).where('from_user_id = ? or to_user_id = ?', user.id, user.id)
                      }, class_name: 'Invite'
+  has_many :accepted_invites, lambda { |user|
+                                unscope(:where).where(accepted: true).where('from_user_id = ? or to_user_id = ?', user.id, user.id)
+                              }, class_name: 'Invite'
+
+  has_many :messages, through: :accepted_invites
 
   def connections
     connected_user_ids = created_invites.accepted.pluck(:to_user_id) + received_invites.accepted.pluck(:from_user_id)

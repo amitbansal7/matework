@@ -9,7 +9,9 @@ class Message < ApplicationRecord
   validate :sender_is_from_invite
   validate :invite_must_be_accepted
 
-  after_create_commit :broadcast_to_channel
+  after_create_commit :broadcast_to_users
+
+  attr_accessor :message_client_id
 
   private
 
@@ -23,17 +25,22 @@ class Message < ApplicationRecord
     end
   end
 
-  def broadcast_to_channel
+  def broadcast_to_users
     [invite.from_user, invite.to_user].each do |user|
-      UserDataChannel.broadcast_to(
-        user,
-        type: 'Message',
-        invite_id: invite.id,
-        id: id,
-        message: text,
-        sender_id: sender_id,
-        created_at: created_at.to_i
-      )
+      broadcast_to_user(user)
     end
+  end
+
+  def broadcast_to_user(user)
+    UserDataChannel.broadcast_to(
+      user,
+      type: 'Message',
+      invite_id: invite.id,
+      message_client_id: message_client_id,
+      id: id,
+      message: text,
+      sender_id: sender_id,
+      created_at: created_at.to_i
+    )
   end
 end
