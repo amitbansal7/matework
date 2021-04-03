@@ -25,7 +25,7 @@ class Invite < ApplicationRecord
   def create_first_message
     return if messages.present?
 
-    messages.create!(text: message, sender_id: from_user_id, created_at: created_at, delivered: true)
+    messages.create!(text: message, sender_id: from_user_id, created_at: created_at)
   end
 
   def broacast_message
