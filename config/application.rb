@@ -10,6 +10,10 @@ module Matework
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.web_console.whitelisted_ips = ['192.168.31.8', '192.168.1.6', '192.168.1.7']
+    config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
+
+
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -17,6 +21,7 @@ module Matework
     # in config/environments, which are processed later.
     #
     # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+    config.eager_load_paths << Rails.root.join("services")
+    config.eager_load_paths << Rails.root.join("serializers")
   end
 end
