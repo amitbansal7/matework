@@ -20,6 +20,8 @@ class User < ApplicationRecord
                               }, class_name: 'Invite'
 
   has_many :messages, through: :accepted_invites
+  has_many :user_skills
+  has_many :skills, through: :user_skills
 
   def connections
     connected_user_ids = created_invites.accepted.pluck(:to_user_id) + received_invites.accepted.pluck(:from_user_id)
