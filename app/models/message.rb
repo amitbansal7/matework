@@ -16,13 +16,15 @@ class Message < ApplicationRecord
   def broadcast_to_user(user)
     UserDataChannel.broadcast_to(
       user,
-      type: 'Message',
-      invite_id: invite.id,
-      message_client_id: message_client_id,
-      id: id,
-      message: text,
-      sender_id: sender_id,
-      created_at: created_at.to_i
+      type: 'message_created',
+      packet: {
+        invite_id: invite.id,
+        message_client_id: message_client_id,
+        id: id,
+        message: text,
+        sender_id: sender_id,
+        created_at: created_at.to_i
+      }
     )
   end
 
