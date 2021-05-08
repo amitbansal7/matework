@@ -32,7 +32,7 @@ module V1
           if user.persisted? || user.save
             render_success(
               message: 'Authenticated',
-              data: { user: serialized_data(user, UserProfileSerializer), token: JwtService.create_new_token(user) }
+              data: { user: serialized_data(user, AuthUserSerializer), token: JwtService.create_new_token(user) }
             )
           else
             render_error(message: 'Not authenticated', message: user.errors.full_messages.join(', '))

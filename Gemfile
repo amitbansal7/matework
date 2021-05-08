@@ -41,7 +41,7 @@ gem 'roar'
 gem 'fast_jsonapi'
 gem 'paranoia'
 gem 'faker'
-
+gem 'will_paginate'
 
 
 group :development, :test do

@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_02_184838) do
+ActiveRecord::Schema.define(version: 2021_04_27_194750) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
   create_table "invites", force: :cascade do |t|
@@ -39,6 +40,24 @@ ActiveRecord::Schema.define(version: 2021_04_02_184838) do
     t.index ["sender_id"], name: "index_messages_on_sender_id"
   end
 
+  create_table "skills", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_skills_on_name"
+    t.index ["name"], name: "trgm_idx_skills_name", opclass: :gin_trgm_ops, using: :gin
+  end
+
+  create_table "user_skills", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "skill_id"
+    t.integer "rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["skill_id"], name: "index_user_skills_on_skill_id"
+    t.index ["user_id"], name: "index_user_skills_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "encrypted_password", default: "", null: false
@@ -51,6 +70,13 @@ ActiveRecord::Schema.define(version: 2021_04_02_184838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "avatar"
+    t.string "short_bio"
+    t.text "looking_for"
+    t.text "long_bio"
+    t.float "experience"
+    t.integer "age"
+    t.string "external_link"
+    t.string "location"
     t.index ["email"], name: "index_users_on_email"
     t.index ["phone_number"], name: "index_users_on_phone_number"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -58,4 +84,6 @@ ActiveRecord::Schema.define(version: 2021_04_02_184838) do
 
   add_foreign_key "invites", "users", column: "from_user_id"
   add_foreign_key "invites", "users", column: "to_user_id"
+  add_foreign_key "user_skills", "skills"
+  add_foreign_key "user_skills", "users"
 end

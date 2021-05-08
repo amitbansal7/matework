@@ -12,7 +12,7 @@ module V1
             render_success(
               message: 'Authenticated',
               data: {
-                user: serialized_data(current_user, UserProfileSerializer),
+                user: serialized_data(current_user, AuthUserSerializer),
                 token: JwtService.should_refresh?(auth_token) ? JwtService.create_new_token(current_user) : auth_token
               }
             )
@@ -45,7 +45,7 @@ module V1
           if !current_user.valid_password?(permitted_params[:password])
             render_error(message: 'Invalid password')
           elsif current_user.update(password: params[:new_password])
-            render_success(message: 'Password Updated', data: serialized_data(current_user, UserProfileSerializer))
+            render_success(message: 'Password Updated', data: serialized_data(current_user, AuthUserSerializer))
           else
             render_error(message: current_user.errors.full_messages.join(', '))
           end
