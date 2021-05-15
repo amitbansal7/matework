@@ -38,8 +38,8 @@ class Invite < ApplicationRecord
           first_name: user[1].first_name,
           last_name: user[1].last_name,
           avatar: user[1].avatar,
-          updated_at: self.updated_at.to_i,
-          invite_id: self.id,
+          updated_at: updated_at.to_i,
+          invite_id: id
         }
       )
     end

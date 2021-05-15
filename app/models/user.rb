@@ -20,7 +20,7 @@ class User < ApplicationRecord
                               }, class_name: 'Invite'
 
   has_many :messages, through: :accepted_invites
-  has_many :user_skills
+  has_many :user_skills, dependent: :destroy
   has_many :skills, through: :user_skills
 
   def connections

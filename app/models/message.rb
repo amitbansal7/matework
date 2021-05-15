@@ -35,9 +35,10 @@ class Message < ApplicationRecord
   end
 
   def sender_is_from_invite
-    if (invite.from_user_id != sender_id) && (invite.to_user_id != sender_id)
-      errors.add(:invite, 'Message must belong to the invite')
-    end
+    return unless invite.from_user_id == sender_id
+    return unless invite.to_user_id == sender_id
+
+    errors.add(:invite, 'Message must belong to the invite')
   end
 
   def broadcast_to_users
