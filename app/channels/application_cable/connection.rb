@@ -11,7 +11,7 @@ module ApplicationCable
     private
 
     def find_verified_user
-      if verified_user = JwtService.get_user(request.headers['Authorization'])
+      if verified_user = JwtService.get_user(request.params['Authorization'])
         verified_user
       else
         reject_unauthorized_connection
