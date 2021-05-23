@@ -14,7 +14,6 @@ module V1
           if invite.save
             render_success(
               message: 'Invitation Sent',
-              data: nil
             )
           else
             render_error(message: invite.errors.full_messages.join(', '))
@@ -41,7 +40,6 @@ module V1
             if invite.update(accepted: true)
               render_success(
                 message: 'Invitation accepted',
-                data: nil
               )
             else
               render_error(message: invite.errors.full_messages.join(', '))
@@ -60,7 +58,6 @@ module V1
             if invite.destroy
               render_success(
                 message: 'Invitation deleted',
-                data: nil
               )
             else
               render_error(message: invite.errors.full_messages.join(', '))

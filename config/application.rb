@@ -10,7 +10,7 @@ module Matework
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
-    config.web_console.whitelisted_ips = ['192.168.31.8', '192.168.1.6', '192.168.1.7', '192.168.1.2']
+    config.web_console.whitelisted_ips = ['192.168.31.8', '192.168.1.6', '192.168.1.7', '192.168.1.2', '192.168.1.5']
     config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/, /file:\/\/*/, 'file://', nil]
 
 

@@ -10,15 +10,9 @@ module V1
         post '/login' do
           # print(params[:phone_number])
           unless Phony.plausible?(params[:phone_number])
-            return render_error(
-              message: 'Invalid phone',
-              data: nil
-            )
+            return render_error(message: 'Invalid phone')
           end
-          return render_success(
-            message: 'Otp sent.',
-            data: nil
-          )
+          return render_success(message: 'Otp sent.')
         end
 
         params do
@@ -35,7 +29,7 @@ module V1
               data: { user: serialized_data(user, AuthUserSerializer), token: JwtService.create_new_token(user) }
             )
           else
-            render_error(message: 'Not authenticated', message: user.errors.full_messages.join(', '))
+            render_error(message: user.errors.full_messages.join(', '))
           end
         end
       end

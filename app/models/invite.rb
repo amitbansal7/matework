@@ -29,15 +29,15 @@ class Invite < ApplicationRecord
   end
 
   def handle_invite_accepted
-    [[to_user, from_user], [from_user, to_user]].each do |user|
+    [[to_user, from_user], [from_user, to_user]].each do |users|
       UserDataChannel.broadcast_to(
-        user[0],
+        users[0],
         type: 'invite_accepted',
         packet: {
-          id: user[1].id,
-          first_name: user[1].first_name,
-          last_name: user[1].last_name,
-          avatar: user[1].avatar,
+          id: users[1].id,
+          first_name: users[1].first_name,
+          last_name: users[1].last_name,
+          avatar: users[1].avatar,
           updated_at: updated_at.to_i,
           invite_id: id
         }
